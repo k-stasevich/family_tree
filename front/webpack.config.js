@@ -1,25 +1,27 @@
 'use strict';
 
-const NODE_ENV = process.env.NODE_ENV || 'development';
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const extractLESS = new ExtractTextPlugin('style.css', { allChunks: true });
+let NODE_ENV = process.env.NODE_ENV || 'development';
+NODE_ENV = NODE_ENV.trim();
 
-const BUILD_PATH = path.resolve(__dirname, 'front/build');
+const BUILD_PATH = path.resolve(__dirname, 'build/' + NODE_ENV);
 const SRC_PATH = path.resolve(__dirname, 'src');
-const APP_PATH = path.resolve(SRC_PATH, 'reactApp');
+const APP_PATH = path.resolve(SRC_PATH, 'app');
 const ASSETS_PATH = path.resolve(SRC_PATH, 'assets');
+
+const extractLESS = new ExtractTextPlugin('style.css', { allChunks: true });
 
 console.log(`using NODE_ENV = ${NODE_ENV}`);
 
 module.exports = {
   context: APP_PATH,
-  entry: './app',
+  entry: './App',
   output: {
-    path: path.resolve(BUILD_PATH, NODE_ENV),
+    path: BUILD_PATH,
     filename: 'build.js',
     publicPath: '/'
   },
@@ -30,7 +32,9 @@ module.exports = {
       app: APP_PATH,
       styles: path.resolve(ASSETS_PATH, 'styles'),
       img: path.resolve(ASSETS_PATH, 'img')
-    }
+    },
+    extensions: ['', '.js', '.jsx'],
+    root: [APP_PATH]
   },
 
   watch: NODE_ENV === 'development',
@@ -46,10 +50,13 @@ module.exports = {
 
       // JS (ES6)
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loader: 'babel',
         include: [APP_PATH],
-        query: { presets: ['es2015', 'react'] }
+        query: {
+          presets: ['es2015', 'react'],
+          plugins: ['transform-object-rest-spread']
+        }
       },
 
       // LESS

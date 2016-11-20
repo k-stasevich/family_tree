@@ -1,0 +1,9 @@
+{
+  "name": "family_tree",
+  "version": "0.0.1",
+  "devDependencies": {},
+  "dependencies": {
+    "express": "^4.14.0",
+    "html": "^1.0.0"
+  }
+}

@@ -1,0 +1,5 @@
+export default {
+  ADD_NODE: 'ADD_NODE',
+  DELETE_NODE: 'DELETE_NODE',
+  EDIT_NODE: 'EDIT_NODE',
+};
