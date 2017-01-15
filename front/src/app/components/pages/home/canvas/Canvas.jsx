@@ -1,3 +1,5 @@
+import './Canvas.less';
+
 import { DropTarget } from 'react-dnd';
 import Node from 'components/pages/home/node/Node';
 
@@ -12,7 +14,7 @@ class Canvas extends React.Component {
       <div className="panel panel-primary" id={this.props.id}>
         <div className="panel-heading">Canvas</div>
         <div className="panel-body">
-          {tree.map(function(item) {
+          {tree.map(function (item) {
             return (
               <Node
                 key={item.id}
@@ -34,14 +36,12 @@ Canvas.propTypes = {
   id: React.PropTypes.string,
   tree: React.PropTypes.array.isRequired,
   addNode: React.PropTypes.func.isRequired,
-  deleteNode: React.PropTypes.func.isRequired,
   editNode: React.PropTypes.func.isRequired,
   connectDropTarget: React.PropTypes.func.isRequired,
   canDrop: React.PropTypes.bool.isRequired,
 };
 
-export default DropTarget(
-  DRAG_TYPES.NODE, {
+export default DropTarget(DRAG_TYPES.NODE, {
     drop(props, monitor, component) {
       const item = monitor.getItem();
 

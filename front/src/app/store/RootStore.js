@@ -6,10 +6,6 @@ if (process.env.NODE_ENV === 'production') {
   configureStore = require('./RootStore.development').default;
 }
 
-const store = configureStore({
-  nodeReducer: {
-    tree: [],
-  }
-});
+const store = configureStore();
 
 export default store;

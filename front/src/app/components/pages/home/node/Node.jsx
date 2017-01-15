@@ -1,6 +1,5 @@
 import './Node.less';
 import noAvatarImg from 'img/no-avatar.png';
-
 import { DragSource } from 'react-dnd';
 
 import DRAG_TYPES from 'constants/DragTypes';
@@ -9,13 +8,13 @@ import DRAG_SOURCES from 'constants/DragSources';
 const Node = (props) => {
   const { connectDragSource } = props;
   const style = {
-    left: props.left,
-    top: props.top,
+    left: props.left || 10,
+    top: props.top || 10,
     opacity: props.isDragging ? 0.4 : 1,
   };
-
+    
   if (props.dragSource === DRAG_SOURCES.CANVAS) {
-    style.position = 'relative';
+    style.position = 'absolute';
   }
 
   return (
@@ -37,14 +36,6 @@ Node.propTypes = {
   top: React.PropTypes.number,
   left: React.PropTypes.number,
   dragSource: React.PropTypes.string.isRequired,
-  deleteNode: function(props, propName, componentName) {
-    if (props.dragSource === DRAG_SOURCES.CANVAS && !props.deleteNode) {
-      return new Error(
-        'Invalid prop `' + propName + '` supplied to' +
-        ' `' + componentName + '`. Validation failed.'
-      );
-    }
-  },
 };
 
 const canvasSource = {
@@ -58,7 +49,12 @@ const canvasSource = {
   },
 
   endDrag(props, monitor) {
-    // stub
+    const isNewNode = monitor.getItem().nodeId === undefined;
+    const droppedOutsideCanvas = !monitor.didDrop();
+
+    if (!isNewNode && droppedOutsideCanvas) {
+      props.deleteNode(props.nodeId);
+    }
   }
 };
 
