@@ -19,10 +19,12 @@ class Canvas extends React.Component {
               <Node
                 key={item.id}
                 nodeId={item.id}
+                description={item.description}
                 top={item.top}
                 left={item.left}
                 dragSource={DRAG_SOURCES.CANVAS}
                 deleteNode={this.props.deleteNode}
+                editNode={this.props.editNode}
               />
             );
           }, this)}

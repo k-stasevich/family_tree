@@ -5,6 +5,13 @@ import { DragSource } from 'react-dnd';
 import DRAG_TYPES from 'constants/DragTypes';
 import DRAG_SOURCES from 'constants/DragSources';
 
+function getOnDescriptionChangeFunction(props) {
+  return function (event) {
+    const newValue = event.target.value;
+    props.editNode(props.nodeId, { description: newValue });
+  };
+}
+
 const Node = (props) => {
   const { connectDragSource } = props;
   const style = {
@@ -12,7 +19,7 @@ const Node = (props) => {
     top: props.top || 10,
     opacity: props.isDragging ? 0.4 : 1,
   };
-    
+
   if (props.dragSource === DRAG_SOURCES.CANVAS) {
     style.position = 'absolute';
   }
@@ -23,7 +30,12 @@ const Node = (props) => {
         <div className="photo">
           <img src={props.img || noAvatarImg} />
         </div>
-        <div className="description">{props.description}</div>
+        <input
+          type="text"
+          className="description"
+          onChange={getOnDescriptionChangeFunction(props)}
+          value={props.description}
+        />
       </div>
     )
   );
@@ -36,6 +48,8 @@ Node.propTypes = {
   top: React.PropTypes.number,
   left: React.PropTypes.number,
   dragSource: React.PropTypes.string.isRequired,
+  deleteNode: React.PropTypes.func,
+  editNode: React.PropTypes.func,
 };
 
 const canvasSource = {

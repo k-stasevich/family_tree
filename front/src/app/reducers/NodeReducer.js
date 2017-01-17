@@ -24,7 +24,7 @@ function addNode(state) {
     ...state,
     tree: tree.concat({
       id: _generateNewId(tree),
-      description: '',
+      description: 'node',
       top: 0,
       left: 0,
     }),
@@ -54,7 +54,7 @@ function editNode(state, id, data) {
     node.left = data.left;
   }
 
-  if (data.description) {
+  if (data.description !== undefined) {
     node.description = data.description;
   }
 
