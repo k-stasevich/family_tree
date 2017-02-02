@@ -20,6 +20,7 @@ class Canvas extends React.Component {
                 key={item.id}
                 nodeId={item.id}
                 description={item.description}
+                img={item.img}
                 top={item.top}
                 left={item.left}
                 dragSource={DRAG_SOURCES.CANVAS}

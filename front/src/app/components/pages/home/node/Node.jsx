@@ -1,12 +1,13 @@
 import './Node.less';
 import noAvatarImg from 'img/no-avatar.png';
+import UploadPhotoBlock from './upload-photo-block/UploadPhotoBlock';
 import { DragSource } from 'react-dnd';
 
 import DRAG_TYPES from 'constants/DragTypes';
 import DRAG_SOURCES from 'constants/DragSources';
 
 function getOnDescriptionChangeFunction(props) {
-  return function (event) {
+  return function(event) {
     const newValue = event.target.value;
     props.editNode(props.nodeId, { description: newValue });
   };
@@ -27,6 +28,12 @@ const Node = (props) => {
   return (
     connectDragSource(
       <div className="node" style={style}>
+        <UploadPhotoBlock
+          show={typeof props.nodeId === 'number'}
+          nodeId={props.nodeId}
+          editNode={props.editNode}
+        />
+
         <div className="photo">
           <img src={props.img || noAvatarImg} />
         </div>

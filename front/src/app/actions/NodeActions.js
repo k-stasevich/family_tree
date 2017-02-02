@@ -15,10 +15,12 @@ const nodeActions = {
   },
 
   editNode(id, data) {
-    return {
-      type: NODE_ACTIONS.EDIT_NODE,
-      id,
-      data
+    return (dispatch) => {
+      dispatch({
+        type: NODE_ACTIONS.EDIT_NODE,
+        id,
+        data
+      });
     };
   }
 };

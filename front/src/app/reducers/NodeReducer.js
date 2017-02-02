@@ -57,6 +57,10 @@ function editNode(state, id, data) {
   if (data.description !== undefined) {
     node.description = data.description;
   }
+  
+  if (data.img) {
+    node.img = data.img;
+  }
 
   return {
     ...state,
